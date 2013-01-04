@@ -19,6 +19,8 @@
 		BB114470169780F000C3AD61 /* MainStoryboard_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB11446E169780F000C3AD61 /* MainStoryboard_iPhone.storyboard */; };
 		BB114473169780F000C3AD61 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB114471169780F000C3AD61 /* MainStoryboard_iPad.storyboard */; };
 		BB114476169780F000C3AD61 /* RBTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB114475169780F000C3AD61 /* RBTViewController.m */; };
+		BB1144831697817D00C3AD61 /* TBXML.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1144821697817D00C3AD61 /* TBXML.m */; };
+		BB11448C1697825B00C3AD61 /* RBTRedmineController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB11448B1697825B00C3AD61 /* RBTRedmineController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +41,11 @@
 		BB114472169780F000C3AD61 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard_iPad.storyboard; sourceTree = "<group>"; };
 		BB114474169780F000C3AD61 /* RBTViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RBTViewController.h; sourceTree = "<group>"; };
 		BB114475169780F000C3AD61 /* RBTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RBTViewController.m; sourceTree = "<group>"; };
+		BB1144821697817D00C3AD61 /* TBXML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TBXML.m; sourceTree = "<group>"; };
+		BB1144841697819700C3AD61 /* TBXML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TBXML.h; sourceTree = "<group>"; };
+		BB11448A1697825B00C3AD61 /* RBTRedmineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBTRedmineController.h; path = Redmine/RBTRedmineController.h; sourceTree = "<group>"; };
+		BB11448B1697825B00C3AD61 /* RBTRedmineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBTRedmineController.m; path = Redmine/RBTRedmineController.m; sourceTree = "<group>"; };
+		BB11448D1697827700C3AD61 /* RedmineControllerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RedmineControllerDelegate.h; path = Redmine/RedmineControllerDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +92,7 @@
 		BB11445C169780F000C3AD61 /* Redmine-Bugtracker */ = {
 			isa = PBXGroup;
 			children = (
+				BB1144801697814C00C3AD61 /* Components */,
 				BB114465169780F000C3AD61 /* RBTAppDelegate.h */,
 				BB114466169780F000C3AD61 /* RBTAppDelegate.m */,
 				BB11446E169780F000C3AD61 /* MainStoryboard_iPhone.storyboard */,
@@ -108,6 +116,34 @@
 				BB11446C169780F000C3AD61 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BB1144801697814C00C3AD61 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BB114485169781E900C3AD61 /* Redmine */,
+				BB1144811697815400C3AD61 /* TBXML */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		BB1144811697815400C3AD61 /* TBXML */ = {
+			isa = PBXGroup;
+			children = (
+				BB1144841697819700C3AD61 /* TBXML.h */,
+				BB1144821697817D00C3AD61 /* TBXML.m */,
+			);
+			name = TBXML;
+			sourceTree = "<group>";
+		};
+		BB114485169781E900C3AD61 /* Redmine */ = {
+			isa = PBXGroup;
+			children = (
+				BB11448A1697825B00C3AD61 /* RBTRedmineController.h */,
+				BB11448B1697825B00C3AD61 /* RBTRedmineController.m */,
+				BB11448D1697827700C3AD61 /* RedmineControllerDelegate.h */,
+			);
+			name = Redmine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +217,8 @@
 				BB114463169780F000C3AD61 /* main.m in Sources */,
 				BB114467169780F000C3AD61 /* RBTAppDelegate.m in Sources */,
 				BB114476169780F000C3AD61 /* RBTViewController.m in Sources */,
+				BB1144831697817D00C3AD61 /* TBXML.m in Sources */,
+				BB11448C1697825B00C3AD61 /* RBTRedmineController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -272,6 +310,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Redmine-Bugtracker/Redmine-Bugtracker-Prefix.pch";
 				INFOPLIST_FILE = "Redmine-Bugtracker/Redmine-Bugtracker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -283,6 +322,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Redmine-Bugtracker/Redmine-Bugtracker-Prefix.pch";
 				INFOPLIST_FILE = "Redmine-Bugtracker/Redmine-Bugtracker-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
