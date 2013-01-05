@@ -14,11 +14,19 @@
     
     [UIDevice currentDevice];
     
+    //Formatting Json Error to Post ======
     NSMutableDictionary *customInfo = [NSMutableDictionary dictionaryWithObject:[[UIDevice currentDevice]systemVersion] forKey:@"SystemVersion"];
     [customInfo setObject:[[UIDevice currentDevice] description] forKey:@"local"];
     
-    NSArray *objects = [NSArray arrayWithObjects:@"bugtrackertap4-ios", @"Objddddd2", customInfo, nil];
-    NSArray *keys = [NSArray arrayWithObjects:@"project_id", @"subject", @"custom_field_values", nil];
+    NSString *projectId = @"bugtrackertap4-ios";
+    NSString *subject = @"Erro information";
+    NSString *traker = @"1";
+    NSString *status = @"1";
+    NSString *sujectTitle = @"subject";
+    
+    
+    NSArray *objects = [NSArray arrayWithObjects:projectId, subject, customInfo, traker, status, nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"project_id", sujectTitle, @"custom_field_values", @"traker", @"status", nil];
     
     NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
     
@@ -26,36 +34,33 @@
     
     //NSLog(@"%@", issueDict);
     
+    
     //NSLog(@"%d",[NSJSONSerialization isValidJSONObject:issueDict]);
     
-    //NSDictionary *jsonDict = [NSDictionary dictionaryWithObject:questionDict forKey:@"question"];
+    if ([NSJSONSerialization isValidJSONObject:issueDict]) {
+        NSError *error;
+        jsonData = [NSJSONSerialization dataWithJSONObject:issueDict
+                                                           options:NSJSONWritingPrettyPrinted
+                                                             error:&error];
+        jsonRequest = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+        //NSLog(@"%@", jsonRequest);
+    }
     
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:issueDict
-                                                       options:NSJSONWritingPrettyPrinted
-                                                         error:&error];
+    //------
     
     
-    NSString *jsonRequest = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-    
-    NSURL *redmineURL = [NSURL URLWithString:@"192.168.20.18:3000"];
-    NSString *redmineUser = @"testuser";
-    NSString *redminePass = @"testuser";
     NSString *redmineProjectIdentifier = @"bugtrackertap4-ios";
-    //NSLog(@"%@", [redmineURL scheme]);
-    //NSLog(@"%@", [redmineURL host]);
-    //NSLog(@"%@",[redmineURL relativePath]);
     
+    NSString *redmineURL = [NSString stringWithFormat:@"http://192.168.20.18:3000/projects/%@/issues.json",redmineProjectIdentifier];
     
-     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@://%@:%@@%@%@/projects/%@/1.json",[redmineURL scheme],redmineUser,redminePass,[redmineURL host],[redmineURL relativePath],redmineProjectIdentifier]];
-    
+    NSURL *url = [NSURL URLWithString:redmineURL];
    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     
     NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
 
-	[request setValue:@"text/json" forHTTPHeaderField:@"Content-type"];
+	[request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:requestData];
 
@@ -84,6 +89,9 @@
     NSLog(@"Nao deu merda");
     //[connection release];
     //do something with the json that comes back ... (the fun part)
+    NSError *error;
+    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableLeaves error:&error];
+    NSLog(@"%@", dic);
 }
 
 - (void)connection:(NSURLConnection *)connection

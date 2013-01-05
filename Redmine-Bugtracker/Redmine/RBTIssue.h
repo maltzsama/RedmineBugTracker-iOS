@@ -10,6 +10,8 @@
 
 @interface RBTIssue : NSObject{
     NSMutableData *receivedData;
+    NSData *jsonData;
+    NSString *jsonRequest;
 }
 
 - (void)sendIssue;
