@@ -10,4 +10,8 @@
 
 @interface RBTViewController : UIViewController
 
+- (IBAction)buttonPressed:(id)sender;
+- (IBAction)buttonSimplePressed:(id)sender;
+
+
 @end
