@@ -28,7 +28,7 @@
         myIssue.projectId = @"bugtrackertap4-ios";
         myIssue.traker = @"1";
         myIssue.status = @"1";
-        myIssue.subjectInfo = @"Crash Report";
+        myIssue.subjectInfo = [NSString stringWithFormat:@"Crash Report: %@",[[reporter savedCrash] objectForKey:@"Name"]];
         
         [myIssue sendIssuetoRedmine];
         [reporter removeSavedCrash];

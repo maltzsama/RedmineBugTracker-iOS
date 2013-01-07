@@ -7,9 +7,6 @@
 //
 
 #import "RBTViewController.h"
-#import "RKRedmine.h"
-#import "RKValue.h"
-#import "RBTIssue.h"
 
 @interface RBTViewController ()
 
