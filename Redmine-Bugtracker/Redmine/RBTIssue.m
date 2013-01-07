@@ -10,8 +10,12 @@
 
 @implementation RBTIssue
 
-@synthesize crashStr;
-@synthesize stackTraceStr;
+@synthesize crash;
+@synthesize stackTrace;
+@synthesize projectId;
+@synthesize traker;
+@synthesize status;
+@synthesize subjectInfo;
 
 - (void)sendIssue{
     
@@ -19,30 +23,22 @@
     
     //Formatting Json Error to Post ======
     NSMutableDictionary *customInfo = [NSMutableDictionary dictionaryWithObject:[[UIDevice currentDevice]systemVersion] forKey:@"SystemVersion"];
-    [customInfo setObject:[[UIDevice currentDevice] description] forKey:@"local"];
-    if (crashStr)
-        [customInfo setObject:crashStr forKey:@"Crash Information"];
-    if (stackTraceStr)
-        [customInfo setObject:stackTraceStr forKey:@"Stack Trace"];
+    [customInfo setObject:[[UIDevice currentDevice] description] forKey:@"Local"];
+
+    NSLog(@"%@",customInfo);
     
-    NSString *projectId = @"bugtrackertap4-ios";
-    NSString *subject = @"Erro information";
-    NSString *traker = @"1";
-    NSString *status = @"1";
-    NSString *sujectTitle = @"subject";
+    if (stackTrace)
+        NSLog(@"%@",stackTrace);
+        [customInfo setObject:stackTrace forKey:@"Stack Trace"];
     
+    NSLog(@"%@",customInfo);
     
-    NSArray *objects = [NSArray arrayWithObjects:projectId, subject, customInfo, traker, status, nil];
-    NSArray *keys = [NSArray arrayWithObjects:@"project_id", sujectTitle, @"custom_field_values", @"traker", @"status", nil];
+    NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, customInfo, traker, status, nil];
+    NSArray *keys = [NSArray arrayWithObjects:@"project_id", @"subject", @"description", @"traker", @"status", nil];
     
-    NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objects forKeys:keys];
+    NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objInfos forKeys:keys];
     
     NSDictionary *issueDict = [NSDictionary dictionaryWithObject:descDict forKey:@"issue"];
-    
-    //NSLog(@"%@", issueDict);
-    
-    
-    //NSLog(@"%d",[NSJSONSerialization isValidJSONObject:issueDict]);
     
     if ([NSJSONSerialization isValidJSONObject:issueDict]) {
         NSError *error;
@@ -52,9 +48,6 @@
         jsonRequest = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
         //NSLog(@"%@", jsonRequest);
     }
-    
-    //------
-    
     
     NSString *redmineProjectIdentifier = @"bugtrackertap4-ios";
     
@@ -74,10 +67,6 @@
     
     NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
     
-    //NSURLResponse* response;
-    //NSError *error = nil;
-    //NSData *connection = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-
     if (connection) {
         receivedData = [NSMutableData data];
     }
@@ -92,14 +81,10 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
-    NSLog(@"deu merda %@", error);
-    //NSLog([NSString stringWithFormat:@"Connection failed: %@", [error description]]);
+    return;
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSLog(@"Nao deu merda");
-    //[connection release];
-    //do something with the json that comes back ... (the fun part)
     NSError *error;
     NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableLeaves error:&error];
     NSLog(@"%@", dic);
@@ -124,9 +109,6 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
                                                            persistence:NSURLCredentialPersistenceForSession];
         [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
     }
-}
--(void)porra{
-    NSLog(@"PORRA");
 }
 
 @end

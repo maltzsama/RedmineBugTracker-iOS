@@ -13,8 +13,15 @@
     NSData *jsonData;
     NSString *jsonRequest;
 }
-@property NSException * crashStr;
-@property NSArray *stackTraceStr;
+@property NSString * crash;
+@property NSDictionary *stackTrace;
+@property NSString *projectId;
+@property NSString *traker;
+@property NSString *status;
+@property NSString *subjectInfo;
+
+
+
 - (void)sendIssue;
 
 @end

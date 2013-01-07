@@ -22,18 +22,18 @@
 {
     [super viewDidLoad];
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@",[prefs objectForKey:@"Crash"]);
-    if ([prefs objectForKey:@"Crash"]) {
-        RBTIssue *myIssue = [[RBTIssue alloc]init];
-        myIssue.crashStr = [prefs objectForKey:@"Crash"];
-        myIssue.stackTraceStr = [prefs objectForKey:@"Stack Trace"];
-        [myIssue sendIssue];
-        teste.text = [NSString stringWithFormat:@"%@",myIssue.crashStr];
+    //NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    //NSLog(@"%@",[prefs objectForKey:@"Crash"]);
+    //if ([prefs objectForKey:@"Crash"]) {
+    //    RBTIssue *myIssue = [[RBTIssue alloc]init];
+    //    myIssue.crashStr = [prefs objectForKey:@"Crash"];
+    //    myIssue.stackTraceStr = [prefs objectForKey:@"Stack Trace"];
+    //    [myIssue sendIssue];
+    //    teste.text = [NSString stringWithFormat:@"%@",myIssue.crashStr];
         
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
-    }
+    //    NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+    //    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    //}
 
 
     
@@ -81,9 +81,9 @@
 
     
     NSArray *teste = [[NSArray alloc]init];
-    //NSLog(@"%@", [teste objectAtIndex:0]);
-    RBTIssue *myIssue = [[RBTIssue alloc]init];
-    [myIssue sendIssue];
+    NSLog(@"%@", [teste objectAtIndex:0]);
+    //RBTIssue *myIssue = [[RBTIssue alloc]init];
+    //[myIssue sendIssue];
 }
 
 @end

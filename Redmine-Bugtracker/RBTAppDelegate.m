@@ -8,6 +8,7 @@
 
 #import "RBTAppDelegate.h"
 #import "RBTIssue.h"
+#import "CKCrashReporter.h"
 
 @implementation RBTAppDelegate
 
@@ -16,16 +17,29 @@
     // Override point for customization after application launch.
      NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     
-    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    NSLog(@"%@",[prefs objectForKey:@"Crash"]);
-    if ([prefs objectForKey:@"Crash"]) {
+    CKCrashReporter *reporter = [CKCrashReporter sharedReporter];
+    reporter.catchExceptions = YES;
+    if ([reporter hasCrashAvailable]) {
+        
         RBTIssue *myIssue = [[RBTIssue alloc]init];
-        myIssue.crashStr = [prefs objectForKey:@"Crash"];
-        myIssue.stackTraceStr = [prefs objectForKey:@"Stack Trace"];
-        [myIssue sendIssue];
+        //myIssue.crash = @"Crash Report";
+        myIssue.stackTrace = [reporter savedCrash];
+        
+        myIssue.projectId = @"bugtrackertap4-ios";
+        myIssue.traker = @"1";
+        myIssue.status = @"1";
+        myIssue.subjectInfo = @"Crash Report";
+        //myIssue.subjectInfo = @"subject";
 
-        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
-        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+        
+        
+        NSLog(@"%@",[reporter savedCrash]);
+        
+        
+        
+        [myIssue sendIssue];
+        
+        [reporter removeSavedCrash];
     }
     
     return YES;
