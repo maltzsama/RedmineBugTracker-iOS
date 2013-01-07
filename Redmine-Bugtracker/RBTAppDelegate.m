@@ -25,6 +25,8 @@
         myIssue.stackTrace = [reporter savedCrash];
         
         myIssue.server = @"http://192.168.20.18:3000";
+        myIssue.userName = @"testuser";
+        myIssue.passwd = @"testuser";
         myIssue.projectId = @"bugtrackertap4-ios";
         myIssue.traker = @"1";
         myIssue.status = @"1";

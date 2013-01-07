@@ -20,7 +20,8 @@
 @property NSString *status;
 @property NSString *subjectInfo;
 @property NSString *server;
-
+@property NSString *userName;
+@property NSString *passwd;
 
 /**
  Send Issue to Redmine;

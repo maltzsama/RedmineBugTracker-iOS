@@ -9,6 +9,22 @@
 #import "RBTIssue.h"
 #import <sys/utsname.h>
 
+NSString *const RBTVersionSystem = @"System Version";
+NSString *const RBTOperationSystem = @"Operation System";
+NSString *const RBTLanguageSystem = @"Language";
+NSString *const RBTCountrySystem = @"Country";
+NSString *const RBTAppVersionSystem = @"App Version";
+NSString *const RBTStackTraceSystem = @"Stack Trace";
+
+NSString *const RMProjectId = @"project_id";
+NSString *const RMSubject = @"subject";
+NSString *const RMDescription = @"description";
+NSString *const RMTraker = @"traker";
+NSString *const RMStatus = @"status";
+
+NSString *const IssueJSON = @"issue";
+
+
 @implementation RBTIssue
 
 @synthesize crash;
@@ -18,6 +34,8 @@
 @synthesize status;
 @synthesize subjectInfo;
 @synthesize server;
+@synthesize userName;
+@synthesize passwd;
 
 /**
  Return the OS kind;
@@ -60,15 +78,14 @@ NSString* machineName()
     
     NSMutableDictionary *customInfo = [[NSMutableDictionary alloc]init];
 
-    [customInfo setObject:[[UIDevice currentDevice]systemVersion] forKey:@"System Version"];
-    [customInfo setObject:machineName() forKey:@"Operation System"];
-    //[customInfo setObject:[[UIDevice currentDevice] description] forKey:@"Local"];
-    [customInfo setObject:[languageArray objectAtIndex:0] forKey:@"Language"];
-    [customInfo setObject:country forKey:@"Country"];
-    [customInfo setObject:appVersion forKey:@"App Version"];
+    [customInfo setObject:[[UIDevice currentDevice]systemVersion] forKey:RBTVersionSystem];
+    [customInfo setObject:machineName() forKey:RBTOperationSystem];
+    [customInfo setObject:[languageArray objectAtIndex:0] forKey:RBTLanguageSystem];
+    [customInfo setObject:country forKey:RBTCountrySystem];
+    [customInfo setObject:appVersion forKey:RBTAppVersionSystem];
     
     if (stackTrace)
-        [customInfo setObject:stackTrace forKey:@"Stack Trace"];
+        [customInfo setObject:stackTrace forKey:RBTStackTraceSystem];
 
     return customInfo;
 }
@@ -78,11 +95,11 @@ NSString* machineName()
     NSDictionary *description = [self formatDeviceInformations];
     
     NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, description, traker, status, nil];
-    NSArray *keys = [NSArray arrayWithObjects:@"project_id", @"subject", @"description", @"traker", @"status", nil];
+    NSArray *keys = [NSArray arrayWithObjects:RMProjectId, RMSubject, RMDescription, RMTraker, RMStatus, nil];
     
     NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objInfos forKeys:keys];
     
-    NSDictionary *issueDict = [NSDictionary dictionaryWithObject:descDict forKey:@"issue"];
+    NSDictionary *issueDict = [NSDictionary dictionaryWithObject:descDict forKey:IssueJSON];
     
     return issueDict;
 }
@@ -153,7 +170,7 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
     else
     {
         // Answer the challenge
-        NSURLCredential *cred = [[NSURLCredential alloc] initWithUser:@"testuser" password:@"testuser"
+        NSURLCredential *cred = [[NSURLCredential alloc] initWithUser:userName password:passwd
                                                            persistence:NSURLCredentialPersistenceForSession];
         [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
     }
