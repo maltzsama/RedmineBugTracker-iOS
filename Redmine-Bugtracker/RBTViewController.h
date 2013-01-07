@@ -8,11 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RBTViewController : UIViewController{
-    IBOutlet UILabel *teste;
-}
+@interface RBTViewController : UIViewController
 
-- (IBAction)buttonPressed:(id)sender;
 - (IBAction)buttonSimplePressed:(id)sender;
 
 

@@ -19,9 +19,12 @@
 @property NSString *traker;
 @property NSString *status;
 @property NSString *subjectInfo;
+@property NSString *server;
 
 
-
-- (void)sendIssue;
+/**
+ Send Issue to Redmine;
+ */
+- (void)sendIssuetoRedmine;
 
 @end

@@ -15,30 +15,22 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
-    
+
     CKCrashReporter *reporter = [CKCrashReporter sharedReporter];
     reporter.catchExceptions = YES;
     if ([reporter hasCrashAvailable]) {
         
         RBTIssue *myIssue = [[RBTIssue alloc]init];
-        //myIssue.crash = @"Crash Report";
+
         myIssue.stackTrace = [reporter savedCrash];
         
+        myIssue.server = @"http://192.168.20.18:3000";
         myIssue.projectId = @"bugtrackertap4-ios";
         myIssue.traker = @"1";
         myIssue.status = @"1";
         myIssue.subjectInfo = @"Crash Report";
-        //myIssue.subjectInfo = @"subject";
-
         
-        
-        NSLog(@"%@",[reporter savedCrash]);
-        
-        
-        
-        [myIssue sendIssue];
-        
+        [myIssue sendIssuetoRedmine];
         [reporter removeSavedCrash];
     }
     
@@ -72,22 +64,6 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     // Internal error reporting
 
-}
-
-- (void) porra{
-    NSLog(@"UHAFIUHAOFJOIAJSFOIJASIOFJAIOSJFIOAJS");
-}
-
-void uncaughtExceptionHandler(NSException *exception) {
-    //NSLog(@"CRASH: %@", exception);
-    //NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
-    
-    //NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    
-    [[NSUserDefaults standardUserDefaults]setObject:exception forKey:@"Crash"];
-    [[NSUserDefaults standardUserDefaults]setObject:[exception callStackSymbols] forKey:@"Stack Trace"];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-        
 }
 
 @end

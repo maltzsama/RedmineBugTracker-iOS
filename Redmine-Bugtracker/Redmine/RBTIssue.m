@@ -7,6 +7,7 @@
 //
 
 #import "RBTIssue.h"
+#import <sys/utsname.h>
 
 @implementation RBTIssue
 
@@ -16,29 +17,79 @@
 @synthesize traker;
 @synthesize status;
 @synthesize subjectInfo;
+@synthesize server;
 
-- (void)sendIssue{
+/**
+ Return the OS kind;
+ */
+NSString* machineName()
+{
+    /*
+     @"i386"      on the simulator
+     @"iPod1,1"   on iPod Touch
+     @"iPod2,1"   on iPod Touch Second Generation
+     @"iPod3,1"   on iPod Touch Third Generation
+     @"iPod4,1"   on iPod Touch Fourth Generation
+     @"iPhone1,1" on iPhone
+     @"iPhone1,2" on iPhone 3G
+     @"iPhone2,1" on iPhone 3GS
+     @"iPad1,1"   on iPad
+     @"iPad2,1"   on iPad 2
+     @"iPad3,1"   on iPad 3 (aka new iPad)
+     @"iPhone3,1" on iPhone 4
+     @"iPhone4,1" on iPhone 4S
+     @"iPhone5,1" on iPhone 5
+     @"iPhone5,2" on iPhone 5
+     */
+    struct utsname systemInfo;
+    uname(&systemInfo);
     
-    [UIDevice currentDevice];
+    return [NSString stringWithCString:systemInfo.machine
+                              encoding:NSUTF8StringEncoding];
+}
+- (NSDictionary *)formatDeviceInformations{
     
-    //Formatting Json Error to Post ======
-    NSMutableDictionary *customInfo = [NSMutableDictionary dictionaryWithObject:[[UIDevice currentDevice]systemVersion] forKey:@"SystemVersion"];
-    [customInfo setObject:[[UIDevice currentDevice] description] forKey:@"Local"];
+    NSArray *languageArray = [NSLocale preferredLanguages];
+    
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *country = [locale localeIdentifier];
 
-    NSLog(@"%@",customInfo);
+    NSString *appVersion = [[NSBundle mainBundle]
+                            objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+
+    
+    NSMutableDictionary *customInfo = [[NSMutableDictionary alloc]init];
+
+    [customInfo setObject:[[UIDevice currentDevice]systemVersion] forKey:@"System Version"];
+    [customInfo setObject:machineName() forKey:@"Operation System"];
+    //[customInfo setObject:[[UIDevice currentDevice] description] forKey:@"Local"];
+    [customInfo setObject:[languageArray objectAtIndex:0] forKey:@"Language"];
+    [customInfo setObject:country forKey:@"Country"];
+    [customInfo setObject:appVersion forKey:@"App Version"];
     
     if (stackTrace)
-        NSLog(@"%@",stackTrace);
         [customInfo setObject:stackTrace forKey:@"Stack Trace"];
+
+    return customInfo;
+}
+
+- (NSDictionary *)formatIssueJsonInformations{
     
-    NSLog(@"%@",customInfo);
+    NSDictionary *description = [self formatDeviceInformations];
     
-    NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, customInfo, traker, status, nil];
+    NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, description, traker, status, nil];
     NSArray *keys = [NSArray arrayWithObjects:@"project_id", @"subject", @"description", @"traker", @"status", nil];
     
     NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objInfos forKeys:keys];
     
     NSDictionary *issueDict = [NSDictionary dictionaryWithObject:descDict forKey:@"issue"];
+    
+    return issueDict;
+}
+
+- (void)sendIssuetoRedmine{
+    
+    NSDictionary *issueDict = [self formatIssueJsonInformations];
     
     if ([NSJSONSerialization isValidJSONObject:issueDict]) {
         NSError *error;
@@ -46,12 +97,9 @@
                                                            options:NSJSONWritingPrettyPrinted
                                                              error:&error];
         jsonRequest = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-        //NSLog(@"%@", jsonRequest);
     }
     
-    NSString *redmineProjectIdentifier = @"bugtrackertap4-ios";
-    
-    NSString *redmineURL = [NSString stringWithFormat:@"http://192.168.20.18:3000/projects/%@/issues.json",redmineProjectIdentifier];
+    NSString *redmineURL = [NSString stringWithFormat:@"%@/projects/%@/issues.json",server,projectId];
     
     NSURL *url = [NSURL URLWithString:redmineURL];
    
@@ -72,6 +120,9 @@
     }
 }
 
+/**
+ Connection Delegate functions.
+*/
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
     [receivedData setLength:0];
 }
@@ -85,9 +136,7 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-    NSError *error;
-    NSDictionary *dic = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableLeaves error:&error];
-    NSLog(@"%@", dic);
+    return;
 }
 
 - (void)connection:(NSURLConnection *)connection
@@ -95,7 +144,6 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
     if ([challenge previousFailureCount] > 1)
     {
         //[urlConnection release];
-        
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Authentication Error"
                                                         message:@"Too many unsuccessul login attempts."
                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
