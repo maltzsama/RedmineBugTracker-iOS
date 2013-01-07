@@ -44,15 +44,25 @@
                                     <action selector="buttonSimplePressed:" destination="2" eventType="touchUpInside" id="04R-6o-avm"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qV9-oT-HVJ">
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="qV9-oT-HVJ" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="111" id="Iyb-0n-d4N"/>
                             <constraint firstAttribute="bottom" secondItem="7Sd-Va-g9B" secondAttribute="bottom" constant="180" id="Nou-rH-A7U"/>
+                            <constraint firstItem="qV9-oT-HVJ" firstAttribute="top" secondItem="3" secondAttribute="top" constant="209" id="S2d-bo-Dkb"/>
                             <constraint firstItem="7Sd-Va-g9B" firstAttribute="centerX" secondItem="wRY-7t-8ug" secondAttribute="centerX" type="default" id="bTQ-uO-6j3"/>
                             <constraint firstItem="wRY-7t-8ug" firstAttribute="leading" secondItem="3" secondAttribute="leading" constant="124" id="dfh-TB-5vM"/>
                             <constraint firstItem="7Sd-Va-g9B" firstAttribute="top" secondItem="wRY-7t-8ug" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="h9p-2J-adR"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="teste" destination="qV9-oT-HVJ" id="ba6-iy-h4o"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
             </objects>

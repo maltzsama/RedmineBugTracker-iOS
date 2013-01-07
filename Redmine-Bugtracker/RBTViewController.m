@@ -7,9 +7,9 @@
 //
 
 #import "RBTViewController.h"
-#import "RBTIssue.h"
 #import "RKRedmine.h"
 #import "RKValue.h"
+#import "RBTIssue.h"
 
 
 @interface RBTViewController ()
@@ -21,6 +21,20 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@",[prefs objectForKey:@"Crash"]);
+    if ([prefs objectForKey:@"Crash"]) {
+        RBTIssue *myIssue = [[RBTIssue alloc]init];
+        myIssue.crashStr = [prefs objectForKey:@"Crash"];
+        myIssue.stackTraceStr = [prefs objectForKey:@"Stack Trace"];
+        [myIssue sendIssue];
+        teste.text = [NSString stringWithFormat:@"%@",myIssue.crashStr];
+        
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    }
+
 
     
    	// Do any additional setup after loading the view, typically from a nib.
@@ -64,8 +78,11 @@
 
 
 - (IBAction)buttonSimplePressed:(id)sender{
-    RBTIssue *myIssue = [[RBTIssue alloc]init];
 
+    
+    NSArray *teste = [[NSArray alloc]init];
+    //NSLog(@"%@", [teste objectAtIndex:0]);
+    RBTIssue *myIssue = [[RBTIssue alloc]init];
     [myIssue sendIssue];
 }
 

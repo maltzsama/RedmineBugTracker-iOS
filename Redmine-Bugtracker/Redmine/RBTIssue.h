@@ -13,7 +13,8 @@
     NSData *jsonData;
     NSString *jsonRequest;
 }
-
+@property NSException * crashStr;
+@property NSArray *stackTraceStr;
 - (void)sendIssue;
 
 @end

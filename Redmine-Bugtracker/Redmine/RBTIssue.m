@@ -10,6 +10,9 @@
 
 @implementation RBTIssue
 
+@synthesize crashStr;
+@synthesize stackTraceStr;
+
 - (void)sendIssue{
     
     [UIDevice currentDevice];
@@ -17,6 +20,10 @@
     //Formatting Json Error to Post ======
     NSMutableDictionary *customInfo = [NSMutableDictionary dictionaryWithObject:[[UIDevice currentDevice]systemVersion] forKey:@"SystemVersion"];
     [customInfo setObject:[[UIDevice currentDevice] description] forKey:@"local"];
+    if (crashStr)
+        [customInfo setObject:crashStr forKey:@"Crash Information"];
+    if (stackTraceStr)
+        [customInfo setObject:stackTraceStr forKey:@"Stack Trace"];
     
     NSString *projectId = @"bugtrackertap4-ios";
     NSString *subject = @"Erro information";
@@ -56,20 +63,24 @@
     NSURL *url = [NSURL URLWithString:redmineURL];
    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
     
     NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
 
 	[request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:requestData];
-
     
-    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self];
+    
+    NSURLConnection *connection = [[NSURLConnection alloc]initWithRequest:request delegate:self startImmediately:YES];
+    
+    //NSURLResponse* response;
+    //NSError *error = nil;
+    //NSData *connection = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+
     if (connection) {
         receivedData = [NSMutableData data];
     }
-    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -113,6 +124,9 @@ didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge{
                                                            persistence:NSURLCredentialPersistenceForSession];
         [[challenge sender] useCredential:cred forAuthenticationChallenge:challenge];
     }
+}
+-(void)porra{
+    NSLog(@"PORRA");
 }
 
 @end

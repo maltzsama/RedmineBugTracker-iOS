@@ -7,12 +7,27 @@
 //
 
 #import "RBTAppDelegate.h"
+#import "RBTIssue.h"
 
 @implementation RBTAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
+    
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSLog(@"%@",[prefs objectForKey:@"Crash"]);
+    if ([prefs objectForKey:@"Crash"]) {
+        RBTIssue *myIssue = [[RBTIssue alloc]init];
+        myIssue.crashStr = [prefs objectForKey:@"Crash"];
+        myIssue.stackTraceStr = [prefs objectForKey:@"Stack Trace"];
+        [myIssue sendIssue];
+
+        NSString *appDomain = [[NSBundle mainBundle] bundleIdentifier];
+        [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:appDomain];
+    }
+    
     return YES;
 }
 							
@@ -41,6 +56,24 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    // Internal error reporting
+
+}
+
+- (void) porra{
+    NSLog(@"UHAFIUHAOFJOIAJSFOIJASIOFJAIOSJFIOAJS");
+}
+
+void uncaughtExceptionHandler(NSException *exception) {
+    //NSLog(@"CRASH: %@", exception);
+    //NSLog(@"Stack Trace: %@", [exception callStackSymbols]);
+    
+    //NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    
+    [[NSUserDefaults standardUserDefaults]setObject:exception forKey:@"Crash"];
+    [[NSUserDefaults standardUserDefaults]setObject:[exception callStackSymbols] forKey:@"Stack Trace"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+        
 }
 
 @end
