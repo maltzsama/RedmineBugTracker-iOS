@@ -46,8 +46,6 @@
 		BB1145A01698D0F500C3AD61 /* RKTimeEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1145961698D0F500C3AD61 /* RKTimeEntry.m */; };
 		BB1145A11698D0F500C3AD61 /* RKValue.m in Sources */ = {isa = PBXBuildFile; fileRef = BB1145981698D0F500C3AD61 /* RKValue.m */; };
 		BBE4903E169B4A4C00750BFF /* CKCrashReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE4903B169B4A4C00750BFF /* CKCrashReporter.m */; };
-		BBE4903F169B4A4C00750BFF /* CKCrashReporter+Mailing.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE4903D169B4A4C00750BFF /* CKCrashReporter+Mailing.m */; };
-		BBE49041169B4B9800750BFF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBE49040169B4B9800750BFF /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -123,9 +121,6 @@
 		BB1145981698D0F500C3AD61 /* RKValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RKValue.m; sourceTree = "<group>"; };
 		BBE4903A169B4A4C00750BFF /* CKCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKCrashReporter.h; sourceTree = "<group>"; };
 		BBE4903B169B4A4C00750BFF /* CKCrashReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKCrashReporter.m; sourceTree = "<group>"; };
-		BBE4903C169B4A4C00750BFF /* CKCrashReporter+Mailing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CKCrashReporter+Mailing.h"; sourceTree = "<group>"; };
-		BBE4903D169B4A4C00750BFF /* CKCrashReporter+Mailing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CKCrashReporter+Mailing.m"; sourceTree = "<group>"; };
-		BBE49040169B4B9800750BFF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -133,7 +128,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BBE49041169B4B9800750BFF /* MessageUI.framework in Frameworks */,
 				BB1144F6169883E500C3AD61 /* libxml2.dylib in Frameworks */,
 				BB114457169780F000C3AD61 /* UIKit.framework in Frameworks */,
 				BB114459169780F000C3AD61 /* Foundation.framework in Frameworks */,
@@ -147,7 +141,6 @@
 		BB114447169780F000C3AD61 = {
 			isa = PBXGroup;
 			children = (
-				BBE49040169B4B9800750BFF /* MessageUI.framework */,
 				BB11445C169780F000C3AD61 /* Redmine-Bugtracker */,
 				BB114455169780F000C3AD61 /* Frameworks */,
 				BB114453169780F000C3AD61 /* Products */,
@@ -300,8 +293,6 @@
 			children = (
 				BBE4903A169B4A4C00750BFF /* CKCrashReporter.h */,
 				BBE4903B169B4A4C00750BFF /* CKCrashReporter.m */,
-				BBE4903C169B4A4C00750BFF /* CKCrashReporter+Mailing.h */,
-				BBE4903D169B4A4C00750BFF /* CKCrashReporter+Mailing.m */,
 			);
 			name = CrashReport;
 			sourceTree = "<group>";
@@ -403,7 +394,6 @@
 				BB1145A01698D0F500C3AD61 /* RKTimeEntry.m in Sources */,
 				BB1145A11698D0F500C3AD61 /* RKValue.m in Sources */,
 				BBE4903E169B4A4C00750BFF /* CKCrashReporter.m in Sources */,
-				BBE4903F169B4A4C00750BFF /* CKCrashReporter+Mailing.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
