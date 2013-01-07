@@ -1,10 +1,11 @@
 #RedmineBugTracker
 
 ##1. What is it?
-`RedmineBugTracker` is a very easy to use crash reporter class for your `iOS` application. It was designed to be easily extendable. _(More information on this can be found under #3)_. `CKCrashReporter` will catch any uncaught `NSException` and save useful information about it on disk. The next time the user starts the application you can read out that information and e.g. send a mail wit it via `MFMailComposeViewController`. If you need a more complex component [KSCrash](https://github.com/kstenerud/KSCrash) should be your first choice!
-All reports are sent to your server "Redmine".
+`RedmineBugTracker` is a very easy to use crash reporter class for your `iOS` application. It was designed to be easily extendable. _(More information on this can be found under #3)_. `CKCrashReporter` will catch any uncaught `NSException` and save useful information about it on disk. The next time the user starts the application the report will be sent to your Redmine server.
+If you need a more complex component [KSCrash](https://github.com/kstenerud/KSCrash) should be your first choice!
+All reports are sent to your server `Redmine`.
 
-`RedmineBugTracker` use [CKCrashReporter](https://github.com/Gi-lo/CKCrashReporter) to generate all reports
+`RedmineBugTracker` use [CKCrashReporter](https://github.com/Gi-lo/CKCrashReporter) to generate all reports.
 
 ##2. How to use it?
 
