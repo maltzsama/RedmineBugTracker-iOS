@@ -1,10 +1,9 @@
-//
-//  RBTIssue.h
-//  Redmine-Bugtracker
-//
-//  Created by demetrius on 04/01/13.
-//  Copyright (c) 2013 demetrius albuquerque. All rights reserved.
-//
+/**
+  RBTIssue.h
+  Redmine-Bugtracker
+  @author demetrius albuquerque<demetrius.albuquerque@yahoo.com.br>
+  @date 04/01/13.
+*/
 
 #import <Foundation/Foundation.h>
 
@@ -13,19 +12,24 @@
     NSData *jsonData;
     NSString *jsonRequest;
 }
-@property NSString * crash;
-@property NSDictionary *stackTrace;
+/** Crash information get from CKCrashReporter*/
+@property NSDictionary * crash;
+/** Redmine Project identification - This is a string */
 @property NSString *projectId;
-@property NSString *traker;
+/** Priority information of bug. */
+@property NSString *priority;
+/** Status of bug. */
 @property NSString *status;
+/** Subject of bug. */
 @property NSString *subjectInfo;
+/** Server address of redmine. */
 @property NSString *server;
+/** User name. */
 @property NSString *userName;
+/** Passwd of user. */
 @property NSString *passwd;
 
-/**
- Send Issue to Redmine;
- */
+/** sending information of about issue to redmine. */
 - (void)sendIssuetoRedmine;
 
 @end

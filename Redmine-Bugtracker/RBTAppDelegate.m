@@ -22,13 +22,13 @@
         
         RBTIssue *myIssue = [[RBTIssue alloc]init];
 
-        myIssue.stackTrace = [reporter savedCrash];
+        myIssue.crash = [reporter savedCrash];
         
         myIssue.server = @"http://192.168.20.18:3000";
         myIssue.userName = @"testuser";
         myIssue.passwd = @"testuser";
         myIssue.projectId = @"bugtrackertap4-ios";
-        myIssue.traker = @"1";
+        myIssue.priority = @"1";
         myIssue.status = @"1";
         myIssue.subjectInfo = [NSString stringWithFormat:@"Crash Report: %@",[[reporter savedCrash] objectForKey:@"Name"]];
         

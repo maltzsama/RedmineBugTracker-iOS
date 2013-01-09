@@ -14,7 +14,7 @@ NSString *const RBTOperationSystem = @"Operation System";
 NSString *const RBTLanguageSystem = @"Language";
 NSString *const RBTCountrySystem = @"Country";
 NSString *const RBTAppVersionSystem = @"App Version";
-NSString *const RBTStackTraceSystem = @"Stack Trace";
+NSString *const RBTCrashSystem = @"Crash";
 
 NSString *const RMProjectId = @"project_id";
 NSString *const RMSubject = @"subject";
@@ -24,13 +24,11 @@ NSString *const RMStatus = @"status";
 
 NSString *const IssueJSON = @"issue";
 
-
 @implementation RBTIssue
 
 @synthesize crash;
-@synthesize stackTrace;
 @synthesize projectId;
-@synthesize traker;
+@synthesize priority;
 @synthesize status;
 @synthesize subjectInfo;
 @synthesize server;
@@ -38,7 +36,7 @@ NSString *const IssueJSON = @"issue";
 @synthesize passwd;
 
 /**
- Return the OS kind;
+ @return string type Operation System;
  */
 NSString* machineName()
 {
@@ -59,12 +57,32 @@ NSString* machineName()
      @"iPhone5,1" on iPhone 5
      @"iPhone5,2" on iPhone 5
      */
+
+    NSArray *modelTypeArray = [[NSArray alloc] initWithObjects:@"i386",@"iPod1,1", @"iPod2,1",@"iPod3,1",
+                                                                     @"iPod4,1", @"iPhone1,1", @"iPhone1,2", @"iPhone2,1", @"iPad1,1",@"iPad2,1",@"iPad3,1",@"iPhone3,1",
+                                                                     @"iPhone4,1",@"iPhone5,1",@"iPhone5,2",nil];
+    NSArray *modelNameArray = [[NSArray alloc] initWithObjects:@"simulator",@"iPod Touch",@"iPod Touch Second Generation",
+                                                                      @"iPod Touch Third Generation",@"iPod Touch Fourth Generation",@"iPhone",@"iPhone 3G",@"iPhone 3GS",@"iPad",
+                                                                      @"iPad 2",@"iPad 3", @"iPhone 4",@"iPhone 4S", @"iPhone 5", @"iPhone 5", nil];
+
     struct utsname systemInfo;
     uname(&systemInfo);
     
-    return [NSString stringWithCString:systemInfo.machine
+    NSString *model = [NSString stringWithCString:systemInfo.machine
                               encoding:NSUTF8StringEncoding];
+    NSString *name = [[NSString alloc] init];
+    if ([modelTypeArray containsObject:model]){
+        name = [modelNameArray objectAtIndex:[modelNameArray indexOfObject:model]];
+    } else{
+        name = model;
+    }
+
+    return name;
 }
+/**
+ Format device iformation
+ @return NSDictionary
+ */
 - (NSDictionary *)formatDeviceInformations{
     
     NSArray *languageArray = [NSLocale preferredLanguages];
@@ -84,17 +102,20 @@ NSString* machineName()
     [customInfo setObject:country forKey:RBTCountrySystem];
     [customInfo setObject:appVersion forKey:RBTAppVersionSystem];
     
-    if (stackTrace)
-        [customInfo setObject:stackTrace forKey:RBTStackTraceSystem];
+    if (crash)
+        [customInfo setObject:crash forKey:RBTCrashSystem];
 
     return customInfo;
 }
 
+/** Format issue information to format the JSON
+ @return NSDictionary
+ */
 - (NSDictionary *)formatIssueJsonInformations{
     
     NSDictionary *description = [self formatDeviceInformations];
     
-    NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, description, traker, status, nil];
+    NSArray *objInfos = [NSArray arrayWithObjects:projectId, subjectInfo, description, priority, status, nil];
     NSArray *keys = [NSArray arrayWithObjects:RMProjectId, RMSubject, RMDescription, RMTraker, RMStatus, nil];
     
     NSDictionary *descDict = [NSDictionary dictionaryWithObjects:objInfos forKeys:keys];
@@ -121,7 +142,7 @@ NSString* machineName()
     NSURL *url = [NSURL URLWithString:redmineURL];
    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:10.0];
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     
     NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
 
