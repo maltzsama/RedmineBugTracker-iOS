@@ -34,7 +34,7 @@ NSString *const IssueJSON = @"issue";
 @synthesize server;
 @synthesize userName;
 @synthesize passwd;
-
+@synthesize timeout;
 /**
  @return string type Operation System;
  */
@@ -139,7 +139,7 @@ NSString* machineName()
     NSURL *url = [NSURL URLWithString:redmineURL];
    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
-                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+                                                           cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:timeout];
     
     NSData *requestData = [NSData dataWithBytes:[jsonRequest UTF8String] length:[jsonRequest length]];
 

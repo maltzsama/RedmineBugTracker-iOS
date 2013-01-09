@@ -28,6 +28,8 @@
 @property NSString *userName;
 /** Passwd of user. */
 @property NSString *passwd;
+//** Set connection timeout*/
+@property NSInteger timeout;
 
 /** sending information of about issue to redmine. */
 - (void)sendIssuetoRedmine;

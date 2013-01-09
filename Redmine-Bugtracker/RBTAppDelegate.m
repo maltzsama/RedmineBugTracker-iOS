@@ -23,7 +23,7 @@
         RBTIssue *myIssue = [[RBTIssue alloc]init];
 
         myIssue.crash = [reporter savedCrash];
-        
+        myIssue.timeout = 60;
         myIssue.server = @"http://192.168.20.18:3000";
         myIssue.userName = @"testuser";
         myIssue.passwd = @"testuser";
