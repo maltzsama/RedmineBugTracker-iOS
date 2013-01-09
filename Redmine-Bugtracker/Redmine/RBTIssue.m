@@ -72,9 +72,8 @@ NSString* machineName()
                               encoding:NSUTF8StringEncoding];
     NSString *name = [[NSString alloc] init];
     if ([modelTypeArray containsObject:model]){
-        NSLog(@"%d",[modelNameArray indexOfObject:model]);
-        uint x = [modelTypeArray indexOfObject:model];
         name = [modelNameArray objectAtIndex:[modelTypeArray indexOfObject:model]];
+        
     } else{
         name = model;
     }
