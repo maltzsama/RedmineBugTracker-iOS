@@ -20,6 +20,7 @@
 		BB114473169780F000C3AD61 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BB114471169780F000C3AD61 /* MainStoryboard_iPad.storyboard */; };
 		BB114476169780F000C3AD61 /* RBTViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BB114475169780F000C3AD61 /* RBTViewController.m */; };
 		BB11449C16978CF400C3AD61 /* RBTIssue.m in Sources */ = {isa = PBXBuildFile; fileRef = BB11449B16978CF400C3AD61 /* RBTIssue.m */; };
+		BB665E8916EE10B500AB400D /* DAIOSInformation.m in Sources */ = {isa = PBXBuildFile; fileRef = BB665E8816EE10B500AB400D /* DAIOSInformation.m */; };
 		BBE4903E169B4A4C00750BFF /* CKCrashReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = BBE4903B169B4A4C00750BFF /* CKCrashReporter.m */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,8 @@
 		BB114475169780F000C3AD61 /* RBTViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RBTViewController.m; sourceTree = "<group>"; };
 		BB11449A16978CF400C3AD61 /* RBTIssue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RBTIssue.h; path = Redmine/RBTIssue.h; sourceTree = "<group>"; };
 		BB11449B16978CF400C3AD61 /* RBTIssue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RBTIssue.m; path = Redmine/RBTIssue.m; sourceTree = "<group>"; };
+		BB665E8716EE10B500AB400D /* DAIOSInformation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DAIOSInformation.h; path = Components/iOSInformation/DAIOSInformation.h; sourceTree = "<group>"; };
+		BB665E8816EE10B500AB400D /* DAIOSInformation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DAIOSInformation.m; path = Components/iOSInformation/DAIOSInformation.m; sourceTree = "<group>"; };
 		BBE4903A169B4A4C00750BFF /* CKCrashReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CKCrashReporter.h; sourceTree = "<group>"; };
 		BBE4903B169B4A4C00750BFF /* CKCrashReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CKCrashReporter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +123,8 @@
 		BB1144801697814C00C3AD61 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				BB665E8716EE10B500AB400D /* DAIOSInformation.h */,
+				BB665E8816EE10B500AB400D /* DAIOSInformation.m */,
 				BBE49038169B4A3000750BFF /* CrashReport */,
 				BB114485169781E900C3AD61 /* Redmine */,
 			);
@@ -217,6 +222,7 @@
 				BB114476169780F000C3AD61 /* RBTViewController.m in Sources */,
 				BB11449C16978CF400C3AD61 /* RBTIssue.m in Sources */,
 				BBE4903E169B4A4C00750BFF /* CKCrashReporter.m in Sources */,
+				BB665E8916EE10B500AB400D /* DAIOSInformation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

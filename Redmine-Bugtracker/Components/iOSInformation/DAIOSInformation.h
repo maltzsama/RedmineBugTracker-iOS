@@ -10,7 +10,7 @@
 #import <sys/utsname.h>
 
 
-@interface KPIOSInformation : NSObject
+@interface DAIOSInformation : NSObject
 
 + (NSString *)deviceType;
 + (NSString *)appVersion;

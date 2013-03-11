@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 demetrius albuquerque. All rights reserved.
 //
 
-#import "KPIOSInformation.h"
+#import "DAIOSInformation.h"
 
 #define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
 #define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
@@ -15,7 +15,16 @@
 #define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
 
 
-@implementation KPIOSInformation
+@implementation DAIOSInformation
+
+NSString *const systemVersion = @"System Version";
+NSString *const deviceModel = @"Device model";
+NSString *const systemLanguage = @"Language";
+NSString *const systemCountry = @"Country";
+NSString *const appVersion = @"App Version";
+NSString *const appName = @"App Name";
+//NSString *const crashSystem = @"Crash";
+
 NSString* machineName()
 {
     /*
@@ -77,21 +86,39 @@ NSString* machineName()
     NSString *udid;
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"6.0"))
         udid = [UIDevice currentDevice].identifierForVendor.UUIDString;
-    else
-        udid = [UIDevice currentDevice].uniqueIdentifier;
+    //else
+    //    udid = [UIDevice currentDevice].uniqueIdentifier;
     
     NSLog(@"%@", udid);
 
     return udid;
 }
 
++ (NSString *)languageSystem{
+    
+    NSArray *languageArray = [NSLocale preferredLanguages];
+    
+    return [languageArray objectAtIndex:0];
+}
+
++ (NSString *)countrySystem{
+    
+    NSLocale *locale = [NSLocale currentLocale];
+    NSString *country = [locale localeIdentifier];
+    
+    return country;
+}
+
 + (NSDictionary *)paramPost{
     NSMutableDictionary *dic = [[NSMutableDictionary alloc]init];
-    [dic setObject:[self imei] forKey:@"imei"];
-    [dic setObject:[self appName] forKey:@"appName"];
-    [dic setObject:[self appVersion] forKey:@"appVersion"];
-    [dic setObject:[self deviceType] forKey:@"deviceName"];
-    [dic setObject:[self soVersion] forKey:@"soVersion"];
+    //[dic setObject:[self imei] forKey:@"imei"];
+    [dic setObject:[self appName] forKey:appName];
+    [dic setObject:[self appVersion] forKey:appVersion];
+    [dic setObject:[self deviceType] forKey:deviceModel];
+    [dic setObject:[self soVersion] forKey:systemVersion];
+    [dic setObject:[self countrySystem] forKey:systemCountry];
+    [dic setObject:[self languageSystem] forKey:systemLanguage];
+    
     return dic;
 }
 
